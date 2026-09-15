@@ -34,7 +34,7 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
-    # CORS Configuration - Explicit origins required when allow_credentials=True
+    # CORS Configuration - Explicit origins & regex patterns for local & deployed frontends
     origins = [
         "http://localhost:3000",
         "http://127.0.0.1:3000",
@@ -47,7 +47,7 @@ def create_app() -> FastAPI:
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins,
-        allow_origin_regex=r"http://(localhost|127\.0\.0\.1)(:\d+)?",
+        allow_origin_regex=r"https?://(localhost|127\.0\.0\.1|.*\.vercel\.app|.*\.netlify\.app)(:\d+)?",
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],

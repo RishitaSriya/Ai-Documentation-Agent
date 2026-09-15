@@ -1,5 +1,5 @@
-// Use explicit IPv4 loopback to prevent Windows IPv6 localhost connection drops
-const API_BASE = 'http://127.0.0.1:8000';
+// Use dynamic API URL from environment variable in production, defaulting to localhost for dev
+const API_BASE = (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000').replace(/\/$/, '');
 
 async function request(url, options = {}) {
   const targetUrl = `${API_BASE}${url}`;
