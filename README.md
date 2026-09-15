@@ -1,4 +1,52 @@
-# AI API Documentation Agent ⚡
+# 🤖 AI API Documentation Agent
+
+> An AI-powered developer tool that automatically detects API changes in a GitHub repository, analyzes their impact, updates OpenAPI documentation, validates the specification, and keeps API documentation synchronized with backend code.
+
+---
+
+## 🚀 Overview
+
+Backend APIs change constantly during software development.
+
+Developers may:
+
+- Add new endpoints
+- Remove existing endpoints
+- Change HTTP methods
+- Add or remove request fields
+- Modify response structures
+- Change path or query parameters
+- Modify authentication requirements
+
+However, API documentation is often updated manually, which can result in outdated or incorrect documentation.
+
+**AI API Documentation Agent** automates this process.
+
+The system monitors a GitHub backend repository, detects API-related code changes, analyzes their meaning using AI, updates the OpenAPI specification, validates the result, and publishes synchronized API documentation.
+
+### Core Flow
+
+```text
+Developer
+    │
+    │ git push
+    ▼
+GitHub Repository
+    │
+    │ Webhook
+    ▼
+AI API Documentation Agent
+    │
+    ├── Change Detection
+    ├── API Route Analysis
+    ├── API Change Comparison
+    ├── AI Change Analysis
+    ├── OpenAPI Update
+    ├── Validation
+    └── Documentation Publishing
+    │
+    ▼
+Swagger / OpenAPI Documentation# AI API Documentation Agent ⚡
 
 > **An AI-powered developer tool that monitors a backend repository, detects API changes from code commits, analyzes semantic diffs, automatically updates and validates OpenAPI specifications, and serves live Swagger documentation.**
 
@@ -109,56 +157,3 @@ npm run dev
 
 - Developer Dashboard: [http://localhost:3000](http://localhost:3000)
 
----
-
-## 5. End-to-End Walkthrough Demonstration
-
-### Step 1: Connect a Repository
-1. Open the Dashboard at `http://localhost:3000`.
-2. Click **Connect Repository**.
-3. Enter `owner` (e.g. `store-org`) and `name` (e.g. `sample-backend`).
-4. Or connect the provided sample backend at `C:\Users\Rishita Sriya V\Documents\project\sample-backend`.
-
-### Step 2: Trigger Analysis
-- Click **Analyze Now** on the repository card or send a POST request:
-  ```powershell
-  Invoke-RestMethod -Uri "http://localhost:8000/repositories/1/analyze?force=true" -Method Post
-  ```
-
-### Step 3: View Live Documentation
-- Click **Swagger UI** on the repository card to open the synchronized Swagger documentation at:
-  `http://localhost:8000/repositories/1/docs`
-
-### Step 4: Inspect AI Reasoning & Code Traceability
-- Click on any detected API change in the dashboard to see:
-  - **Before vs After Structural JSON Diff**
-  - **AI Agent Explanation**
-  - **Impact Severity Classification (HIGH / MEDIUM / LOW)**
-  - **Confidence Score & Auto-Publish Status**
-  - **Source Code Traceability** (File and Line Number)
-
----
-
-## 6. Environment Variables Reference
-
-| Variable | Default | Description |
-| :--- | :--- | :--- |
-| `APP_ENV` | `development` | Runtime environment mode |
-| `DATABASE_URL` | `sqlite:///./storage/api_agent.db` | SQLAlchemy database connection string |
-| `STORAGE_PATH` | `./storage` | Directory for repositories, logs, and OpenAPI files |
-| `GITHUB_TOKEN` | *(optional)* | Personal access token for authenticated GitHub REST API |
-| `GITHUB_WEBHOOK_SECRET` | *(optional)* | Secret key for verifying HMAC-SHA256 webhook signatures |
-| `LLM_PROVIDER` | `mock` | Active provider: `mock`, `gemini`, or `openai` |
-| `LLM_API_KEY` | *(optional)* | API Key for Gemini / OpenAI |
-| `CONFIDENCE_THRESHOLD` | `0.85` | Changes below this score are held for `REVIEW_REQUIRED` |
-| `AUTO_PUBLISH` | `true` | Auto-publish high confidence validated specifications |
-
----
-
-## 7. Key Differentiators
-
-1. **Explainable API Changes:** Not just a raw diff, but clear reasoning explaining *why* documentation changed.
-2. **API Impact Analysis:** Automatic classification of breaking vs non-breaking changes (`HIGH`, `MEDIUM`, `LOW`).
-3. **Change History & Versioning:** Tracks every API evolution step across Git commits with version rollback protection.
-4. **AI Safety & Determinism:** LLM reasoning is validated with Pydantic and applied programmatically, eliminating hallucinated file corruption.
-5. **Code Traceability:** Every change links directly to the source file and line number where the change originated.
